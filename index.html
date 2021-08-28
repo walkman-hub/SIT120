@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>refrigerator magnet</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+        <nav>
+            <div class="nav_add"  @click="pop=false">Add</div>
+            <div class="nav_left">
+                <img src="image/date.png" alt="">
+                <p class="date">{{date}}</p>
+                <img src="image/notice.png" alt="">
+                <p class="text">{{text}}</p>
+            </div>
+            <div class="nav_right">
+                <div class="nav_search">
+                    <div class="text">
+                        <input type="text" placeholder="search" maxlength="20" v-model="searchName"/>
+                    </div>
+                    <select class="years" v-model="yearSet">
+                        <option value="all">all</option>
+                        <option v-for="year in yearAll" key="year" :value="year">{{year}}</option>
+                    </select>
+                    <div class="button" @click="search"></div>
+                    <div class="nav_user" @click="user"></div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="content">
+          <div class="left">
+             
+              <div class="left_content">
+                  <div class="box" v-for="goodsS in goodsShow" key="goodsS.year">
+                      <div class="year">
+                          {{goodsS.year}}
+                      </div>
+                      <div class="goods" @click="addtochart(good.name)" v-for="good in goodsS.goods" key="good.name">
+                          <div class="item">
+                              <div class="item_name">
+                                  {{good.name}}
+                                  <span class="add_cart">add to cart</span>
+                              </div>
+                              <div class="item_price">
+                                  $ {{good.price}}*{{good.count}}
+                              </div>
+                              <div class="item_date">
+                                  {{good.date.day}}
+                              </div>
+                          </div>
+                          
+                      </div>
+                      
+                  </div>
+              </div>
+          </div>
+          
+          <div class="right">
+            <div class="right_cart">
+                <div class="logo">
+                    <img src="image/cart.png" alt="">
+                    <div class="text">Cart</div>
+                </div>
+                <div class="clear" @click="clear">clear all</div>
+            </div>
+            <div class="right_total">
+                <div>total</div>
+                <div>$ {{totalprice}}</div>
+            </div>
+            <div class="right_items">
+                <div class="items" v-for="(cart,index) in cartItem" :key="cart.index">
+                    <div class="items_left">
+                        <div class="items_name">{{cart.name}}</div>
+                        <div class="items_price">$ {{cart.price}}</div>
+                    </div>
+                    <div class="items_right">
+                        <div class="items_red" @click="reduce(index)">-</div>
+                        <div class="items_count">{{cart.count}}</div>
+                        <div class="items_add" @click="addcount(index)">+</div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+          
+         <div class="pop" v-show="!pop">
+             <div class="pop_left">
+                <div class="form">
+                    <p class="title">
+                        Items name
+                    </p>
+                    <input class="good_name" type="text" v-model="goodName" maxlength="20" placeholder="Please enter the product name on">
+                </div>
+               <div class="form">
+                    <p class="title">
+                        Purchase time
+                    </p>
+                    <input class="good_date" type="date" v-model="goodDate">
+               </div>
+               <div class="form">
+                    <p class="title">
+                        Price
+                    </p>
+                    <input class="good_number" type="number" v-model="goodPrice">
+               </div>
+               <div class="form">
+                    <p class="title">
+                        Quantity
+                    </p>
+                    <input class="good_number" type="number" v-model="goodCount">
+               </div>
+               <div class="form">
+                    <p class="title">
+                        Items type
+                    </p>
+                    <div class="good_Type">
+                        <div v-for="goodType in goodsType" key="goodType">
+                            <input type="radio" v-model="type" :id="goodType" name="type" :value="goodType">
+                            <label class="list" :for="goodType">
+                                {{goodType}}
+                            </label>
+                        </div>
+                        
+                    </div>
+               </div> 
+             </div>
+
+             <div class="pop_right">
+                 <div class="close" @click="pop=true"></div>
+                 <div class="submit" @click="add()">submit</div>
+             </div>
+         </div>
+          
+      </div>
+    </main>
+     
+
+</div>
+
+
+  <script src="js/components.js"></script>
+  
+ 
+  
+</body>
+</html>
