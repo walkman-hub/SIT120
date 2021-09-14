@@ -160,7 +160,7 @@ window.onload=function(){
       goodsShow:[],
       user:"user",
       total:0,
-      cartItem:[{name:"aaa",count:1,price:20}],
+      cartItem:[],
       goodName:'',
       goodDate:'',
       goodCount:'',
@@ -188,11 +188,16 @@ window.onload=function(){
     },
     computed:{
         totalprice(){
-          let total = 0
-          this.cartItem.forEach(v=>{
-            total+=v.price*v.count
-          })
-          return total
+          if(this.cartItem != null){
+            let total = 0
+            this.cartItem.forEach(v=>{
+              total+=v.price*v.count
+            })
+            return total
+          }else{
+            this.cartItem = []
+          }
+          
         }
       },
     watch:{
